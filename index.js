@@ -1,17 +1,22 @@
-// Author: Abby Shah
+/*
+ * Author: Abby Shah
+ * Main API
+ */
 
-const express = require("express");
-const path = require("path");
-const spawn = require("child_process").spawn;
-const fs = require("fs");
+import express, { json, urlencoded } from "express";
+import { spawn } from "child_process";
+import { appendFileSync } from "fs";
 
+// Create express app
 const app = express();
 const port = process.env.PORT || "8000";
 
+// Variables
 const fileData1 = "data1.txt";
 
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
+// Middleware
+app.use(json());
+app.use(urlencoded({ extended: true }));
 
 // Root
 app.get("/", (req, res) => {
@@ -21,14 +26,11 @@ app.get("/", (req, res) => {
 // Ingest data
 app.post("/event", (req, res) => {
 	let expId = req.body.experienceID;
-	let data = " " + expId.toString();
-	fs.appendFileSync(fileData1, data);
 
-	let obj = {data: "event"};
-	res
-	.status(200)
-	.type("text")
-	.send(JSON.stringify(obj));
+	let data = " " + expId.toString();
+	appendFileSync(fileData1, data);
+
+	res.status(200).type("text").send("Success");
 });
 
 // Start api
