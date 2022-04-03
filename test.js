@@ -1,3 +1,8 @@
+/*
+ * Author: Abby Shah
+ * To test API
+ */
+
 fetch('http://localhost:8000/event', {
   method: 'POST',
   body: JSON.stringify({ "experienceID": 1 }),
@@ -5,5 +10,5 @@ fetch('http://localhost:8000/event', {
     'Content-type': 'application/json; charset=UTF-8'
   }
 })
-.then(res => res.json())
+.then(res => res.text())
 .then(console.log);
